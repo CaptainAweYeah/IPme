@@ -1,0 +1,16 @@
+﻿<Window x:Class="IPme.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IPme"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="submitEmail" Content="Submit" HorizontalAlignment="Center" Margin="0,372,0,0" VerticalAlignment="Top" Height="36" Width="128" FontFamily="Lucida Console" FontSize="36"/>
+        <TextBox x:Name="emailIn" HorizontalAlignment="Center" Margin="0,71,0,0" TextWrapping="Wrap" Text="Enter email here" VerticalAlignment="Top" Width="424" Height="36" FontFamily="Lucida Console" FontSize="36"/>
+        <TextBox x:Name="emailOut" HorizontalAlignment="Center" Margin="0,315,0,0" TextWrapping="Wrap" Text="Support Email Here" VerticalAlignment="Top" Width="424" Height="36" FontFamily="Lucida Console" FontSize="36"/>
+        <TextBox x:Name="emailPass" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="Enter Password Here" VerticalAlignment="Top" Width="424" Height="36" FontFamily="Lucida Console" FontSize="36"/>
+
+    </Grid>
+</Window>
