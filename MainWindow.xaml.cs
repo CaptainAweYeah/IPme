@@ -56,7 +56,6 @@ namespace IPme
 
                 using var client = new SmtpClient();
                 client.Connect($"smtp.{eClient}", 587, false);
-                // Note: only needed if the SMTP server requires authentication  
                 client.Authenticate($"{mailIn.Text}", $"{ePass.Text}");
                 client.Send(message);
                 client.Disconnect(true);
