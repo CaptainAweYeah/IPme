@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MailKit.Net.Smtp;
 using MimeKit;
 
 namespace IPme
@@ -23,44 +26,35 @@ namespace IPme
             submitEmail.Click += SubmitEmail_Click;
         }
 
-        // Click event (find way to simplify?)
+        // Click event
         private void SubmitEmail_Click(object sender, RoutedEventArgs e)
         {
-            OnClick(emailIn, emailOut, emailPass);
+            IPAddress server = CheckIP(supportIP.Text);
+
+            OnClick(server);
         }
 
-
-        private void OnClick(TextBox mailIn, TextBox mailOut, TextBox ePass)
+        public static IPAddress CheckIP(string server)
         {
-            if (mailIn != null && mailOut != null) 
+            if (server != null)
             {
-                string ipOut = ipProcess();
-
-                int atCnt1 = mailIn.Text.IndexOf('@');
-                int atCnt2 = mailOut.Text.IndexOf('@');
-
-                string eClient = mailIn.Text.Substring(atCnt1 + 1);
-
-                string mailInName = mailIn.Text.Substring(0, atCnt1);
-                string mailOutName = mailOut.Text.Substring(0, atCnt2);
-
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress($"{mailInName}",$"{mailIn.Text}"));
-                message.To.Add(new MailboxAddress($"{mailOutName}", $"{mailOut.Text}"));
-                message.Subject = $"IPMe Output from {mailInName}!";
-
-                message.Body = new TextPart("plain")
+                if (IPAddress.TryParse(server, out IPAddress ip))
                 {
-                    Text = $"{ipOut}"
-                };
-
-                using var client = new SmtpClient();
-                client.Connect($"smtp.{eClient}", 587, false);
-                client.Authenticate($"{mailIn.Text}", $"{ePass.Text}");
-                client.Send(message);
-                client.Disconnect(true);
+                    return IPAddress.Parse(server);
+                }
             }
+            throw new Exception("Code not valid!");
         }
+
+
+        private void OnClick(IPAddress serverIP)
+        {
+            ClientLink link = new ClientLink();
+            string ipConfigOut = ipProcess();
+            link.Client(ipConfigOut, serverIP);
+        }
+
+        
 
         private string ipProcess()
         {
